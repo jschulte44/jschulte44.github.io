@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10271d">
+<title>Drew &amp; Monique — Tee Off</title>
+<style>
+:root{--forest:#10271d;--ivory:#f5f0e4;--gold:#c7a86b;--ink:#14271f}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:var(--forest);color:var(--ivory)}
+button,a{font:inherit}button{cursor:pointer}
+.hero{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;display:grid;place-items:center;background:#1b3026}
+.hero-bg{position:absolute;inset:0;z-index:-3;background-image:linear-gradient(180deg,#07140b38,#07140bd9),url("golfer-mountain-poster.jpg");background-size:cover;background-position:center 42%;transform:scale(1.015)}
+.vignette{position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse at center,transparent 25%,#06120b80 100%);pointer-events:none}
+.intro-copy{width:min(92vw,760px);text-align:center;padding:2rem 1rem;transition:opacity .45s,transform .45s}
+.eyebrow{font:600 .7rem/1.6 Arial,sans-serif;letter-spacing:.34em;text-transform:uppercase;color:#e2cca0}
+h1{font-weight:400;font-size:clamp(3rem,9vw,6.8rem);line-height:.98;letter-spacing:-.045em;margin:.7rem 0 1rem;text-shadow:0 4px 28px #0008}
+.rule{width:62px;height:1px;background:var(--gold);margin:1.35rem auto}
+.meta{font: .78rem/1.9 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.tagline{font-size:clamp(1rem,2vw,1.25rem);font-style:italic;color:#eee4d1;margin-top:1rem}
+.btn{display:inline-block;margin-top:1.8rem;padding:1rem 2.2rem;border:1px solid var(--gold);background:var(--forest);color:#f7e8c4;text-decoration:none;text-transform:uppercase;letter-spacing:.2em;font:600 .75rem Arial,sans-serif;box-shadow:0 8px 35px #0005;transition:background .2s,color .2s,transform .2s}
+.btn:hover{background:var(--gold);color:var(--forest);transform:translateY(-2px)}
+.small-note{font: .68rem Arial,sans-serif;letter-spacing:.12em;color:#f5f0e4b8;margin-top:1.1rem}
+.skip{position:absolute;z-index:12;right:1rem;bottom:1rem;border:1px solid #ffffff90;border-radius:99px;padding:.65rem 1rem;color:white;background:#0c2018b8;font: .68rem Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.ball{position:absolute;z-index:5;left:50%;top:68%;width:clamp(22px,4vw,46px);aspect-ratio:1;border-radius:50%;opacity:0;background:radial-gradient(circle at 30% 25%,#fff 0,#f5f4ed 36%,#bfc4bd 78%,#68736b 100%);box-shadow:inset -5px -5px 8px #59655a55,0 5px 25px #0008}
+.ball:after{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle,#b6bbb2 1px,transparent 1.7px);background-size:6px 6px;opacity:.5}
+.cracks{position:absolute;inset:0;width:100%;height:100%;z-index:6;opacity:0;pointer-events:none}
+.shards{position:absolute;inset:-10%;z-index:7;opacity:0;pointer-events:none;background:linear-gradient(125deg,transparent 35%,#ffffff4a 35.15%,transparent 35.6%),linear-gradient(55deg,transparent 48%,#ffffff40 48.2%,transparent 48.7%),linear-gradient(160deg,transparent 60%,#ffffff25 60.2%,transparent 60.6%)}
+.playing .ball{animation:drive 1s cubic-bezier(.15,.7,.2,1) .45s forwards}
+@keyframes drive{0%{opacity:1;transform:translate(-50%,-50%) scale(.6);top:70%}70%{opacity:1;transform:translate(-50%,-50%) scale(2.1);top:48%}100%{opacity:1;transform:translate(-50%,-50%) scale(4.2);top:48%}}
+.playing .cracks{animation:crackShow .1s linear 1.42s forwards}
+.playing .cracks path{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw .3s ease-out 1.43s forwards}
+@keyframes crackShow{to{opacity:1}}@keyframes draw{to{stroke-dashoffset:0}}
+.playing .shards{animation:shatter .75s ease-in 1.65s forwards}
+@keyframes shatter{0%{opacity:.2;transform:scale(1)}30%{opacity:1;transform:scale(1.03)}100%{opacity:0;transform:scale(1.18)}}
+.playing .intro-copy{animation:fadeAway .4s ease-in 2s forwards}
+@keyframes fadeAway{to{opacity:0;transform:scale(1.04);visibility:hidden}}
+.invite{position:absolute;z-index:9;inset:0;display:grid;place-items:center;text-align:center;padding:2rem;background:linear-gradient(180deg,#10271d45,#10271d8c),url("golfer-mountain-poster.jpg") center/cover;opacity:0;visibility:hidden;transform:scale(1.025);transition:opacity .7s,transform .7s,visibility .7s}
+.invite:before{content:"";position:absolute;inset:18px;border:1px solid #c7a86b;pointer-events:none}
+.invite.show{opacity:1;visibility:visible;transform:scale(1)}
+.invite-inner{max-width:700px;text-shadow:0 3px 25px #0008}
+.invite h2{font-size:clamp(2.8rem,8vw,6rem);font-weight:400;line-height:.95;margin:1rem 0}
+.invite .tagline{letter-spacing:.04em}
+.home{display:none;min-height:100svh;color:var(--ink);background:var(--ivory);text-align:center}
+.home.show{display:block}
+.nav{display:flex;justify-content:center;gap:clamp(1rem,4vw,3rem);flex-wrap:wrap;padding:1.2rem;background:var(--forest);color:var(--ivory);font: .65rem Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase}
+.home-hero{padding:clamp(4rem,10vw,8rem) 1.5rem;background:linear-gradient(#07140b45,#07140b9c),url("golfer-mountain-poster.jpg") center/cover;color:white}
+.home-hero h2{font-size:clamp(3rem,8vw,6rem);font-weight:400;margin:1rem 0}
+.home-hero p{font: .8rem/2 Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.details{max-width:850px;margin:auto;padding:4rem 1.5rem;line-height:1.8}
+.details h3{font-size:2rem;font-weight:400}
+@media(max-width:600px){.hero-bg{background-position:35% center}.meta{letter-spacing:.12em}.invite:before{inset:10px}.btn{padding:.95rem 1.3rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main>
+<section class="hero" id="hero" aria-label="Drew and Monique wedding intro">
+  <div class="hero-bg"></div><div class="vignette"></div>
+  <div class="intro-copy" id="introCopy">
+    <div class="eyebrow">Our greatest drive yet</div>
+    <h1>Drew <span style="color:var(--gold)">&amp;</span> Monique</h1>
+    <div class="rule"></div>
+    <div class="meta">May 22, 2027 &nbsp;·&nbsp; Estes Park, Colorado</div>
+    <div class="tagline">A love worth celebrating.</div>
+    <button class="btn" id="teeOff">Tee Off&nbsp; ↗</button>
+    <div class="small-note">A cinematic wedding experience</div>
+  </div>
+  <div class="ball" aria-hidden="true"></div>
+  <svg class="cracks" viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true">
+   <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".95">
+    <path d="M500 350 L454 303 L420 248 L372 215 L345 170 M420 248 L430 200 L408 157 M454 303 L386 307 L332 284 L279 236 L238 222 M386 307 L360 358 L313 384 L287 430 M500 350 L545 300 L585 260 L601 204 L650 170 M585 260 L640 273 L697 252 L743 210 M545 300 L612 333 L657 375 L718 394 L761 437 M500 350 L480 408 L448 455 L442 513 M480 408 L528 444 L555 492 L600 533 M500 350 L559 371 L603 411 L628 460 M454 303 L488 260 L500 218 L483 175 M420 248 L374 258 L344 240 M603 411 L660 421 L704 459 L742 497 M332 284 L303 322 L265 340 M545 300 L531 245 L547 204"/>
+   </g>
+  </svg>
+  <div class="shards" aria-hidden="true"></div>
+  <button class="skip" id="skip">Skip intro</button>
+  <section class="invite" id="invite" aria-label="Wedding invitation reveal">
+    <div class="invite-inner">
+      <div class="eyebrow">Together is a beautiful place to be</div>
+      <h2>Drew &amp;<br>Monique</h2>
+      <div class="rule"></div>
+      <div class="meta">May 22, 2027 · Estes Park, Colorado</div>
+      <div class="tagline">A love worth celebrating.</div>
+      <button class="btn" id="enter">Enter Our Wedding</button>
+      <div><button class="skip" id="replay" style="position:relative;right:auto;bottom:auto;margin-top:1rem">Replay intro</button></div>
+    </div>
+  </section>
+</section>
+<section class="home" id="home">
+  <nav class="nav"><span>Our Story</span><span>Weekend Details</span><span>Travel</span><span>RSVP</span><span>Registry</span></nav>
+  <header class="home-hero"><div class="eyebrow">A love worth celebrating</div><h2>Drew &amp; Monique</h2><p>May 22, 2027 · Estes Park, Colorado</p></header>
+  <section class="details">
+    <h3>We're getting married!</h3>
+    <p>We can't wait to celebrate with you. This is your starter wedding homepage. Replace this copy with your ceremony and reception details, schedule, lodging recommendations, travel information, RSVP link, and registry.</p>
+    <p><strong>Weekend details coming soon.</strong></p>
+  </section>
+</section>
+</main>
+<script>
+(() => {
+ const hero=document.getElementById('hero'), invite=document.getElementById('invite'), home=document.getElementById('home');
+ const tee=document.getElementById('teeOff'), skip=document.getElementById('skip'), enter=document.getElementById('enter'), replay=document.getElementById('replay');
+ let timer;
+ function reveal(){clearTimeout(timer);invite.classList.add('show');skip.style.display='none'}
+ function play(){clearTimeout(timer);home.classList.remove('show');hero.style.display='grid';invite.classList.remove('show');skip.style.display='block';hero.classList.remove('playing');void hero.offsetWidth;hero.classList.add('playing');timer=setTimeout(reveal,2450)}
+ function enterHome(){clearTimeout(timer);hero.style.display='none';home.classList.add('show');window.scrollTo({top:0,behavior:'smooth'})}
+ tee.addEventListener('click',play);skip.addEventListener('click',reveal);enter.addEventListener('click',enterHome);replay.addEventListener('click',play);
+})();
+</script>
+</body>
+</html>
